@@ -18,7 +18,7 @@ const startGame = (info) => {
 app.post('/newGame', (req, res) => {
   const info = getInfo(req.body);
   res.json(info);
-  startGame(info)
+  while (true) {}
 })
 
 app.listen(port, () => console.log('Server started at port', port))
