@@ -1,7 +1,10 @@
 const express = require('express')
+const { Game } = require('Game.js')
 const port = process.env.PORT || 5000
 const app = express()
 app.use(express.json())
+
+let gameList = [];
 
 const getInfo = (request) => {
     return {
@@ -17,9 +20,18 @@ const startGame = (info) => {
 
 app.post('/newGame', (req, res) => {
   const info = getInfo(req.body);
+  gameList += new Game(info);
   res.json(info);
-  while (true) {}
 })
 
-app.listen(port, () => console.log('Server started at port', port))
+app.listen(port, () => {
+    console.log('Server started at port', port)
+    setInterval(() => {
+        for (game of gameList) {
+            console.log(game.print())
+        }
+        console.log('')
+    },
+    4000)
+})
 
