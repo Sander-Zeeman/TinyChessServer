@@ -4,7 +4,11 @@ const app = express()
 app.use(express.json())
 
 const getInfo = (request) => {
-    return request.x
+    return {
+        ip: request.ip,
+        name: request.name,
+        type: request.type === "HOST" ? 1 : (request.type == "JOIN" ? 0 : -1)
+    }
 }
 
 const startGame = (info) => {
@@ -13,7 +17,7 @@ const startGame = (info) => {
 
 app.post('/newGame', (req, res) => {
   const info = getInfo(req.body);
-  res.json({data: info});
+  res.json(info);
   startGame(info)
 })
 
